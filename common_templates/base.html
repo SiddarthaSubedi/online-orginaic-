@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts: Poppins & Caveat -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Caveat:wght@600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --organic-primary: #1c3b18;
+            --organic-dark: #163015;
+            --organic-light: #7ac47a;
+            --organic-accent: #f6b653;
+        }
+
+        /* GLOBAL */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #1d2b21;
+            margin: 0;
+
+            /* Soft multi-layer background */
+            background:
+                radial-gradient(circle at top left, #dff4e0 0, transparent 55%),
+                radial-gradient(circle at bottom right, #ffe9d5 0, transparent 55%),
+                linear-gradient(150deg, #f7faf5 0%, #ffffff 50%, #f2f6f1 100%);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+        .navbar-organic {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            background: radial-gradient(circle at top left,
+                    rgba(120, 188, 120, 0.22) 0,
+                    transparent 55%),
+                rgba(28, 59, 24, 0.96);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 10px 30px rgba(8, 18, 10, 0.35);
+        }
+
+        .navbar-organic .navbar-brand {
+            font-family: 'Caveat', cursive !important;
+            color: #ffffff !important;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .navbar-organic .navbar-brand span {
+            font-size: 1.8rem;
+        }
+
+        .navbar-organic .nav-link,
+        .navbar-organic .dropdown-toggle {
+            color: rgba(255, 255, 255, 0.88) !important;
+            font-weight: 500;
+            font-size: 0.92rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding-inline: 0.9rem;
+            position: relative;
+        }
+
+        .navbar-organic .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0.9rem;
+            right: 0.9rem;
+            bottom: 0.3rem;
+            height: 2px;
+            background: linear-gradient(90deg, var(--organic-light), var(--organic-accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 200ms ease-out, opacity 200ms ease-out;
+            opacity: 0;
+        }
+
+        .navbar-organic .nav-link:hover::after,
+        .navbar-organic .nav-link.active::after {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+
+        .navbar-organic .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        /* Custom toggler icon so it's visible on dark bg */
+        .navbar-organic .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.4);
+            padding: 0.3rem 0.55rem;
+        }
+
+        .navbar-organic .navbar-toggler:focus {
+            box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.35);
+        }
+
+        .navbar-organic .navbar-toggler-icon {
+            width: 1.4em;
+            height: 1.4em;
+            background-image:
+                linear-gradient(#ffffff, #ffffff),
+                linear-gradient(#ffffff, #ffffff),
+                linear-gradient(#ffffff, #ffffff);
+            background-size: 100% 2px;
+            background-position: center top, center center, center bottom;
+            background-repeat: no-repeat;
+        }
+
+        /* Auth buttons on navbar */
+        .navbar-auth-btn {
+            font-size: 0.9rem;
+            border-radius: 999px;
+            padding: 0.3rem 1.15rem;
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            color: #ffffff;
+            background: transparent;
+            transition: background-color 160ms ease-out,
+                color 160ms ease-out,
+                box-shadow 160ms ease-out,
+                border-color 160ms ease-out,
+                transform 120ms ease-out;
+        }
+
+        .navbar-auth-btn:hover {
+            background: linear-gradient(135deg, var(--organic-light), var(--organic-accent));
+            color: #133016;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            transform: translateY(-1px);
+        }
+
+        /* MAIN LAYOUT */
+        .main-shell {
+            min-height: 75dvh;
+            padding-top: 2.4rem;
+            padding-bottom: 3.6rem;
+            max-width: 1120px;
+        }
+
+        /* Optional card wrapper for pages */
+        .page-card {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 18px;
+            padding: 1.9rem 1.9rem 2.2rem;
+            box-shadow: 0 18px 48px rgba(19, 40, 16, 0.16);
+            border: 1px solid rgba(99, 155, 99, 0.16);
+        }
+
+        @media (min-width: 992px) {
+            .page-card {
+                padding: 2.4rem 2.7rem 2.7rem;
+            }
+        }
+
+        /* Generic button style you can use: class="btn btn-organic" */
+        .btn-organic {
+            background: linear-gradient(135deg, var(--organic-primary), var(--organic-light));
+            border: none;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 0.55rem 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            box-shadow: 0 10px 30px rgba(22, 73, 26, 0.35);
+            transition: transform 120ms ease-out,
+                box-shadow 160ms ease-out,
+                filter 140ms ease-out;
+        }
+
+        .btn-organic:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 36px rgba(22, 73, 26, 0.45);
+            color: #ffffff;
+        }
+
+        .btn-organic:active {
+            transform: translateY(1px);
+            box-shadow: 0 6px 18px rgba(22, 73, 26, 0.3);
+        }
+
+        /* TOASTS */
+        .toast {
+            border-radius: 0.9rem;
+            box-shadow: 0 14px 40px rgba(5, 18, 8, 0.35);
+            overflow: hidden;
+        }
+
+        /* FOOTER */
+        .footer-organic {
+            background: linear-gradient(135deg,
+                    #1f3f19 0%,
+                    #172f13 45%,
+                    #0f2110 100%);
+            color: rgba(241, 248, 239, 0.9);
+            padding: 26px 0 24px;
+            margin-top: 40px;
+            font-size: 0.94rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 -10px 35px rgba(5, 12, 6, 0.6);
+        }
+
+        .footer-organic p {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-organic a {
+            color: #d5f2d7;
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .footer-organic a:hover {
+            color: #ffe0ad;
+            text-decoration: underline;
+        }
+
+        .footer-organic .small {
+            opacity: 0.9;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+    </style>
+
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+
+<body>
+
+    {% if messages %}
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        {% for message in messages %}
+        <div class="toast align-items-center text-bg-{{ message.tags }} border-0 mb-2" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            var toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl, { delay: 5000 });
+            });
+            toastList.forEach(toast => toast.show());
+        });
+    </script>
+    {% endif %}
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-organic">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span>🌿</span> Organic Store
+            </a>
+
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarOrganic" aria-controls="navbarOrganic" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarOrganic">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products/">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+                    {% if request.user.is_authenticated %}
+                    <a class="navbar-auth-btn" href="{% url 'accounts:logoutpage' %}">
+                        Logout
+                    </a>
+                    {% else %}
+                    <a class="navbar-auth-btn" href="{% url 'accounts:loginpage' %}">
+                        Login
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <main class="container main-shell">
+        {# Wrap content in .page-card in your templates for a glassy card look #}
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-organic text-center">
+        <div class="container">
+            <p class="mb-1 fw-semibold">
+                © {{ year|default:2025 }} Organic Store — Fresh • Healthy • Natural
+            </p>
+            <p class="small mb-0">
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms</a> •
+                <a href="/contact/">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
